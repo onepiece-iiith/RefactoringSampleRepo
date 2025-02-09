@@ -35,8 +35,13 @@ class ScoreCalculator {
     }
 
     private String getEqualScore(int score) {
-        String[] scores = {"Love-All", "Fifteen-All", "Thirty-All", "Deuce"};
-        return scores[Math.min(score, 3)];
+        switch (score) {
+            case 0: return "Love-All";
+            case 1: return "Fifteen-All";
+            case 2: return "Thirty-All";
+            case 3: return "Deuce";
+            default: return "Deuce";
+        }
     }
 
     private String getAdvantageOrWin(int m_score1, int m_score2) {
