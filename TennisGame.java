@@ -17,8 +17,21 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
+        return new ScoreDisplay(m_score1, m_score2).getScore();
+    }
+}
+
+class ScoreDisplay{
+    private int m_score1;
+    private int m_score2;
+
+    public ScoreDisplay(int score1, int score2){
+        this.m_score1 = score1;
+        this.m_score2 = score2;
+    }
+
+    public String getScore(){
         String score = "";
-        int tempScore = 0;
         if (m_score1 == m_score2) {
             score = getScoreForEqualScores(m_score1);
         } else if (m_score1 >= 4 || m_score2 >= 4) {
