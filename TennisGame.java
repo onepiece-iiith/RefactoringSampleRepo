@@ -42,16 +42,8 @@ public class TennisGame1 implements TennisGame {
         }
 
         private String formatTie() {
-            switch (m_score1) {
-                case 0:
-                    return "Love-All";
-                case 1:
-                    return "Fifteen-All";
-                case 2:
-                    return "Thirty-All";
-                default:
-                    return "Deuce";
-            }
+            String[] scores = {"Love-All", "Fifteen-All", "Thirty-All", "Deuce"};
+            return (m_score1 < scores.length) ? scores[m_score1] : "Deuce";
         }
 
         private String formatAdvantageOrWin() {
@@ -63,23 +55,8 @@ public class TennisGame1 implements TennisGame {
         }
 
         private String formatStandardScore() {
-            String score = "";
-            for (int i = 1; i < 3; i++) {
-                int tempScore = (i == 1) ? m_score1 : m_score2;
-                score += getScoreDescription(tempScore);
-                if (i < 2) score += "-";
-            }
-            return score;
-        }
-
-        private String getScoreDescription(int score) {
-            switch (score) {
-                case 0: return "Love";
-                case 1: return "Fifteen";
-                case 2: return "Thirty";
-                case 3: return "Forty";
-                default: return ""; //Shouldn't happen
-            }
+            String[] scoreDescriptions = {"Love", "Fifteen", "Thirty", "Forty"};
+            return scoreDescriptions[m_score1] + "-" + scoreDescriptions[m_score2];
         }
     }
 }
