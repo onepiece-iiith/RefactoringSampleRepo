@@ -69,6 +69,7 @@ public class TennisGame1 implements TennisGame {
 
         private String getScoreForRegularPlay(int score1, int score2) {
             String score = "";
+            int tempScore;
             for (int i=1; i<3; i++)
             {
                 if (i==1) tempScore = score1;
