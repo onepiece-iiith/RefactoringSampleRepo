@@ -17,66 +17,43 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
-        int tempScore=0;
-        if (m_score1==m_score2)
-        {
-            score = getScoreForEqualScores(m_score1);
+        if (m_score1 == m_score2) {
+            return getScoreForEqualScores(m_score1);
+        } else if (m_score1 >= 4 || m_score2 >= 4) {
+            return getScoreForAdvantageOrWin(m_score1, m_score2);
+        } else {
+            return getScoreForStandardPoints(m_score1, m_score2);
         }
-        else if (m_score1>=4 || m_score2>=4)
-        {
-            score = getScoreForAdvantageOrWin(m_score1, m_score2);
-        }
-        else
-        {
-            score = getScoreForStandardPoints(m_score1, m_score2);
-        }
-        return score;
     }
 
     private String getScoreForEqualScores(int score) {
-        switch (score) {
-            case 0:
-                return "Love-All";
-            case 1:
-                return "Fifteen-All";
-            case 2:
-                return "Thirty-All";
-            default:
-                return "Deuce";
-        }
+        return switch (score) {
+            case 0 -> "Love-All";
+            case 1 -> "Fifteen-All";
+            case 2 -> "Thirty-All";
+            default -> "Deuce";
+        };
     }
 
     private String getScoreForAdvantageOrWin(int score1, int score2) {
-        int minusResult = score1-score2;
-        if (minusResult==1) return "Advantage player1";
-        else if (minusResult ==-1) return "Advantage player2";
-        else if (minusResult>=2) return "Win for player1";
-        else return "Win for player2";
+        int minusResult = score1 - score2;
+        if (minusResult == 1) return "Advantage player1";
+        if (minusResult == -1) return "Advantage player2";
+        if (minusResult >= 2) return "Win for player1";
+        return "Win for player2";
     }
 
-    private String getScoreForStandardPoints(int score1, int score2){
-        String score = "";
-        for (int i=1; i<3; i++) {
-            if (i==1) tempScore = m_score1;
-            else { score+="-"; tempScore = m_score2;}
-            score += getScoreForSinglePlayer(tempScore);
-        }
-        return score;
+    private String getScoreForStandardPoints(int score1, int score2) {
+        return getScoreForSinglePlayer(score1) + "-" + getScoreForSinglePlayer(score2);
     }
 
     private String getScoreForSinglePlayer(int score) {
-        switch (score) {
-            case 0:
-                return "Love";
-            case 1:
-                return "Fifteen";
-            case 2:
-                return "Thirty";
-            case 3:
-                return "Forty";
-            default:
-                return ""; //Should not happen, handle appropriately if needed
-        }
+        return switch (score) {
+            case 0 -> "Love";
+            case 1 -> "Fifteen";
+            case 2 -> "Thirty";
+            case 3 -> "Forty";
+            default -> "";
+        };
     }
 }
