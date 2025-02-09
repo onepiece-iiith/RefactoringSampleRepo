@@ -1,4 +1,3 @@
-
 public class TennisGame1 implements TennisGame {
     
     private int m_score1 = 0;
@@ -23,22 +22,7 @@ public class TennisGame1 implements TennisGame {
         int tempScore=0;
         if (m_score1==m_score2)
         {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
+            score = getScoreForSameScore(m_score1);
         }
         else if (m_score1>=4 || m_score2>=4)
         {
@@ -50,27 +34,40 @@ public class TennisGame1 implements TennisGame {
         }
         else
         {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
+            score = getScoreForDifferentScore(m_score1,m_score2);
+        }
+        return score;
+    }
+
+    private String getScoreForSameScore(int score) {
+        String scoreStr = "";
+        switch (score) {
+            case 0:
+                scoreStr = "Love-All";
+                break;
+            case 1:
+                scoreStr = "Fifteen-All";
+                break;
+            case 2:
+                scoreStr = "Thirty-All";
+                break;
+            default:
+                scoreStr = "Deuce";
+                break;
+        }
+        return scoreStr;
+    }
+
+    private String getScoreForDifferentScore(int score1, int score2) {
+        String score = "";
+        String[] scoreStrings = {"Love", "Fifteen", "Thirty", "Forty"};
+        for (int i = 1; i < 3; i++) {
+            int tempScore = (i == 1) ? score1 : score2;
+            score += scoreStrings[tempScore];
+            if (i < 2) {
+                score += "-";
             }
         }
         return score;
     }
-}
+}    
