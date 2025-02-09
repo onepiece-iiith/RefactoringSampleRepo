@@ -17,37 +17,37 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        if (m_score1 == m_score2) {
-            return getScoreForEqualScores();
-        } else if (m_score1 >= 4 || m_score2 >= 4) {
-            return getScoreForAdvantageOrWin();
-        } else {
-            return getScoreForNormalPlay();
-        }
-    }
-
-    private String getScoreForEqualScores() {
-        String[] scores = {"Love-All", "Fifteen-All", "Thirty-All", "Deuce"};
-        return scores[Math.min(m_score1, 3)];
-    }
-
-    private String getScoreForAdvantageOrWin() {
-        int minusResult = m_score1 - m_score2;
-        if (minusResult == 1) {
-            return "Advantage player1";
-        } else if (minusResult == -1) {
-            return "Advantage player2";
-        } else if (minusResult >= 2) {
-            return "Win for player1";
-        } else {
-            return "Win for player2";
-        }
-    }
-
-    private String getScoreForNormalPlay() {
         String score = "";
-        String[] scoreValues = {"Love", "Fifteen", "Thirty", "Forty"};
-        score = scoreValues[m_score1] + "-" + scoreValues[m_score2];
+        if (m_score1 == m_score2) {
+            score = getEqualScoreString();
+        } else if (isNormalPlay()) {
+            score = getNormalPlayScore();
+        } else {
+            score = getAdvantageOrWinScore();
+        }
         return score;
     }
-}
+
+    private String getEqualScoreString() {
+        String[] equalScores = {"Love-All", "Fifteen-All", "Thirty-All", "Deuce"};
+        int minScore = Math.min(m_score1, 3);
+        return equalScores[minScore];
+    }
+
+    private boolean isNormalPlay() {
+        return m_score1 < 4 && m_score2 < 4;
+    }
+
+    private String getAdvantageOrWinScore() {
+        int minusResult = m_score1 - m_score2;
+        if (minusResult == 1) return "Advantage player1";
+        if (minusResult == -1) return "Advantage player2";
+        if (minusResult >= 2) return "Win for player1";
+        return "Win for player2";
+    }
+
+    private String getNormalPlayScore() {
+        String[] scoreValues = {"Love", "Fifteen", "Thirty", "Forty"};
+        return scoreValues[m_score1] + "-" + scoreValues[m_score2];
+    }
+}   
