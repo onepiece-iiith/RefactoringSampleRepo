@@ -24,19 +24,21 @@ public class TennisGame1 implements TennisGame {
 
 class ScoreCalculator {
     public String calculateScore(int score1, int score2) {
-        String score = "";
         if (score1 == score2) {
-            score = getScoreForSameScore(score1);
+            return getScoreForSameScore(score1);
         } else if (score1 >= 4 || score2 >= 4) {
-            int minusResult = score1 - score2;
-            if (minusResult == 1) score = "Advantage player1";
-            else if (minusResult == -1) score = "Advantage player2";
-            else if (minusResult >= 2) score = "Win for player1";
-            else score = "Win for player2";
+            return handleHighScores(score1, score2);
         } else {
-            score = getScoreForDifferentScore(score1, score2);
+            return getScoreForDifferentScore(score1, score2);
         }
-        return score;
+    }
+
+    private String handleHighScores(int score1, int score2) {
+        int minusResult = score1 - score2;
+        if (minusResult == 1) return "Advantage player1";
+        if (minusResult == -1) return "Advantage player2";
+        if (minusResult >= 2) return "Win for player1";
+        return "Win for player2";
     }
 
     private String getScoreForSameScore(int score) {
@@ -53,15 +55,7 @@ class ScoreCalculator {
     }
 
     private String getScoreForDifferentScore(int score1, int score2) {
-        String score = "";
         String[] scoreStrings = {"Love", "Fifteen", "Thirty", "Forty"};
-        for (int i = 1; i < 3; i++) {
-            if (i == 1) {
-                score += scoreStrings[score1];
-            } else {
-                score += "-" + scoreStrings[score2];
-            }
-        }
-        return score;
+        return scoreStrings[score1] + "-" + scoreStrings[score2];
     }
 }
