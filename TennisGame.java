@@ -1,9 +1,9 @@
 public class TennisGame1 implements TennisGame {
-    
     private int m_score1 = 0;
     private int m_score2 = 0;
     private String player1Name;
     private String player2Name;
+    private ScoreCalculator scoreCalculator = new ScoreCalculator();
 
     public TennisGame1(String player1Name, String player2Name) {
         this.player1Name = player1Name;
@@ -18,23 +18,23 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
+        return scoreCalculator.calculateScore(m_score1, m_score2);
+    }
+}
+
+class ScoreCalculator {
+    public String calculateScore(int score1, int score2) {
         String score = "";
-        int tempScore=0;
-        if (m_score1==m_score2)
-        {
-            score = getScoreForSameScore(m_score1);
-        }
-        else if (m_score1>=4 || m_score2>=4)
-        {
-            int minusResult = m_score1-m_score2;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for player2";
-        }
-        else
-        {
-            score = getScoreForDifferentScore(m_score1, m_score2);
+        if (score1 == score2) {
+            score = getScoreForSameScore(score1);
+        } else if (score1 >= 4 || score2 >= 4) {
+            int minusResult = score1 - score2;
+            if (minusResult == 1) score = "Advantage player1";
+            else if (minusResult == -1) score = "Advantage player2";
+            else if (minusResult >= 2) score = "Win for player1";
+            else score = "Win for player2";
+        } else {
+            score = getScoreForDifferentScore(score1, score2);
         }
         return score;
     }
