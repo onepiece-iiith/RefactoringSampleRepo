@@ -43,55 +43,62 @@ class ScoreDisplay{
     }
 
     private String getScoreForEqualScores(int score) {
+        String result = "";
         switch (score) {
             case 0:
-                return "Love-All";
+                result = "Love-All";
+                break;
             case 1:
-                return "Fifteen-All";
+                result = "Fifteen-All";
+                break;
             case 2:
-                return "Thirty-All";
+                result = "Thirty-All";
+                break;
             default:
-                return "Deuce";
+                result = "Deuce";
+                break;
         }
+        return result;
     }
 
     private String getScoreForAdvantageOrWin(int score1, int score2) {
         int minusResult = score1 - score2;
-        if (minusResult == 1)
-            return "Advantage player1";
-        else if (minusResult == -1)
-            return "Advantage player2";
-        else if (minusResult >= 2)
-            return "Win for player1";
-        else
-            return "Win for player2";
+        String result = "";
+        if (minusResult == 1) {
+            result = "Advantage player1";
+        } else if (minusResult == -1) {
+            result = "Advantage player2";
+        } else if (minusResult >= 2) {
+            result = "Win for player1";
+        } else {
+            result = "Win for player2";
+        }
+        return result;
     }
 
     private String getScoreForNormalPlay(int score1, int score2) {
-        String score = "";
-        for (int i = 1; i < 3; i++) {
-            if (i == 1)
-                score = getScoreForSinglePlayer(score1);
-            else {
-                score += "-";
-                score += getScoreForSinglePlayer(score2);
-            }
-        }
-        return score;
+        return getScoreForSinglePlayer(score1) + "-" + getScoreForSinglePlayer(score2);
     }
 
     private String getScoreForSinglePlayer(int score) {
+        String result = "";
         switch (score) {
             case 0:
-                return "Love";
+                result = "Love";
+                break;
             case 1:
-                return "Fifteen";
+                result = "Fifteen";
+                break;
             case 2:
-                return "Thirty";
+                result = "Thirty";
+                break;
             case 3:
-                return "Forty";
+                result = "Forty";
+                break;
             default:
-                return "";
+                result = "";
+                break;
         }
+        return result;
     }
 }
