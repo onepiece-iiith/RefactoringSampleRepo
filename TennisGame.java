@@ -1,4 +1,3 @@
-
 public class TennisGame1 implements TennisGame {
     
     private int m_score1 = 0;
@@ -20,57 +19,62 @@ public class TennisGame1 implements TennisGame {
 
     public String getScore() {
         String score = "";
-        int tempScore=0;
         if (m_score1==m_score2)
         {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
+            score = getScoreForEqualScores(m_score1);
         }
         else if (m_score1>=4 || m_score2>=4)
         {
-            int minusResult = m_score1-m_score2;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for player2";
+            score = getScoreForAdvantageOrWin(m_score1, m_score2);
         }
         else
         {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
+            score = getScoreForStandardScores(m_score1, m_score2);
         }
         return score;
+    }
+
+    private String getScoreForEqualScores(int score) {
+        String scoreText = "";
+        switch (score) {
+            case 0: scoreText = "Love-All"; break;
+            case 1: scoreText = "Fifteen-All"; break;
+            case 2: scoreText = "Thirty-All"; break;
+            default: scoreText = "Deuce"; break;
+        }
+        return scoreText;
+    }
+
+    private String getScoreForAdvantageOrWin(int score1, int score2) {
+        String scoreText = "";
+        int minusResult = score1-score2;
+        if (minusResult==1) scoreText ="Advantage player1";
+        else if (minusResult ==-1) scoreText ="Advantage player2";
+        else if (minusResult>=2) scoreText = "Win for player1";
+        else scoreText ="Win for player2";
+        return scoreText;
+    }
+
+    private String getScoreForStandardScores(int score1, int score2){
+        String scoreText = "";
+        for (int i=1; i<3; i++) {
+            if (i == 1) {
+                scoreText += getScoreText(score1);
+            } else {
+                scoreText += "-" + getScoreText(score2);
+            }
+        }
+        return scoreText;
+    }
+
+    private String getScoreText(int score) {
+        String scoreText = "";
+        switch(score) {
+            case 0: scoreText = "Love"; break;
+            case 1: scoreText = "Fifteen"; break;
+            case 2: scoreText = "Thirty"; break;
+            case 3: scoreText = "Forty"; break;
+        }
+        return scoreText;
     }
 }
